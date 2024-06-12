@@ -4,12 +4,10 @@ import pandas as pd
 
 class Table:
     def __init__(self, number_array: np.ndarray) -> None:
-        max_number = max(self.numbers)
-
         assert number_array.shape == self.table_size
         assert np.issubdtype(number_array.dtype, np.integer)
         assert number_array.min() >= 0
-        assert number_array.max() <= max_number
+        assert number_array.max() <= max(self.numbers)
 
         self._number_array = number_array
 
