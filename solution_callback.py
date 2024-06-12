@@ -22,7 +22,7 @@ class SolutionCallback(cp_model.CpSolverSolutionCallback):
         raise Exception(f"Zero Assigned Number at {h_position} {v_position}")
 
     def _save_result(self) -> None:
-        result_number_array = np.zeros(self._table.size, dtype=int)
+        result_number_array = np.zeros(self._table.table_size, dtype=int)
         for h_idx, h_position in enumerate(self._table.h_positions):
             for v_idx, v_position in enumerate(self._table.v_positions):
                 number = self._get_assigned_number(h_position=h_position, v_position=v_position)

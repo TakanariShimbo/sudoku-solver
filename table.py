@@ -6,7 +6,7 @@ class Table:
     def __init__(self, number_array: np.ndarray) -> None:
         max_number = max(self.numbers)
 
-        assert number_array.shape == self.size
+        assert number_array.shape == self.table_size
         assert np.issubdtype(number_array.dtype, np.integer)
         assert number_array.min() >= 0
         assert number_array.max() <= max_number
@@ -22,8 +22,8 @@ class Table:
         return list(range(1, 10))
 
     @property
-    def size(self) -> tuple[int, int]:
-        return len(self.h_positions), len(self.v_positions)
+    def table_size(self) -> tuple[int, int]:
+        return len(self.v_positions), len(self.h_positions)
 
     @property
     def numbers(self) -> list[int]:
