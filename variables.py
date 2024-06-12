@@ -1,19 +1,19 @@
 from ortools.sat.python import cp_model
 
-from consts import Consts
+from table import Table
 
 
 class Variables:
-    def __init__(self, model: cp_model.CpModel, consts: Consts) -> None:
-        self._consts = consts
+    def __init__(self, model: cp_model.CpModel, table: Table) -> None:
+        self._table = table
         self._is_assigned_var_dict = self.prepare_is_assigned_var(model=model)
 
     def prepare_is_assigned_var(self, model: cp_model.CpModel) -> dict[tuple[int, int, int], cp_model.BoolVarT]:
         is_assigned_var_dict: dict[tuple[int, int, int], cp_model.BoolVarT] = {}
 
-        for h_position in self._consts.h_positions:
-            for v_position in self._consts.v_positions:
-                for number in self._consts.numbers:
+        for h_position in self._table.h_positions:
+            for v_position in self._table.v_positions:
+                for number in self._table.numbers:
                     key = (h_position, v_position, number)
                     val = model.new_bool_var(f"IsAssignedVar_Hpos{h_position}_Vpos{v_position}_Num{number}")
                     is_assigned_var_dict[key] = val

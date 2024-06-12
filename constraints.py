@@ -1,18 +1,18 @@
 from ortools.sat.python import cp_model
 
-from consts import Consts
+from table import Table
 from variables import Variables
 
 
-def add_constraints(model: cp_model.CpModel, consts: Consts, variables: Variables) -> None:
+def add_constraints(model: cp_model.CpModel, table: Table, variables: Variables) -> None:
     # -----------------------------------------
     # One number per cell (h, v) constraint
     # -----------------------------------------
-    for h_position in consts.h_positions:
-        for v_position in consts.v_positions:
+    for h_position in table.h_positions:
+        for v_position in table.v_positions:
 
             is_assigned_vars: list[cp_model.BoolVarT] = []
-            for number in consts.numbers:
+            for number in table.numbers:
                 is_assigned_var = variables.get_is_assigned_var(h_position=h_position, v_position=v_position, number=number)
                 is_assigned_vars.append(is_assigned_var)
 
@@ -21,11 +21,11 @@ def add_constraints(model: cp_model.CpModel, consts: Consts, variables: Variable
     # -----------------------------------------
     # Vartical constraint
     # -----------------------------------------
-    for number in consts.numbers:
-        for h_position in consts.h_positions:
+    for number in table.numbers:
+        for h_position in table.h_positions:
 
             is_assigned_vars: list[cp_model.BoolVarT] = []
-            for v_position in consts.v_positions:
+            for v_position in table.v_positions:
                 is_assigned_var = variables.get_is_assigned_var(h_position=h_position, v_position=v_position, number=number)
                 is_assigned_vars.append(is_assigned_var)
 
@@ -34,11 +34,11 @@ def add_constraints(model: cp_model.CpModel, consts: Consts, variables: Variable
     # -----------------------------------------
     # Horizontal constraint
     # -----------------------------------------
-    for number in consts.numbers:
-        for v_position in consts.v_positions:
+    for number in table.numbers:
+        for v_position in table.v_positions:
 
             is_assigned_vars: list[cp_model.BoolVarT] = []
-            for h_position in consts.h_positions:
+            for h_position in table.h_positions:
                 is_assigned_var = variables.get_is_assigned_var(h_position=h_position, v_position=v_position, number=number)
                 is_assigned_vars.append(is_assigned_var)
 
@@ -47,13 +47,13 @@ def add_constraints(model: cp_model.CpModel, consts: Consts, variables: Variable
     # -----------------------------------------
     # 3x3 subgrid constraint
     # -----------------------------------------
-    for number in consts.numbers:
-        for h_grid_position in consts.h_grid_positions:
-            for v_grid_position in consts.v_grid_positions:
+    for number in table.numbers:
+        for h_grid_position in table.h_grid_positions:
+            for v_grid_position in table.v_grid_positions:
 
                 is_assigned_vars: list[cp_model.BoolVarT] = []
-                for h_position_in_grid in consts.h_positions_in_grid:
-                    for v_position_in_grid in consts.v_positions_in_grid:
+                for h_position_in_grid in table.h_positions_in_grid:
+                    for v_position_in_grid in table.v_positions_in_grid:
                         is_assigned_var = variables.get_is_assigned_var_(
                             h_grid_position=h_grid_position,
                             v_grid_position=v_grid_position,
@@ -68,10 +68,10 @@ def add_constraints(model: cp_model.CpModel, consts: Consts, variables: Variable
     # -----------------------------------------
     # Fixed constraint
     # -----------------------------------------
-    for v_position in consts.v_positions:
-        for h_position in consts.h_positions:
+    for v_position in table.v_positions:
+        for h_position in table.h_positions:
 
-            fixed_number = consts.get_fixed_number(h_position=h_position, v_position=v_position)
+            fixed_number = table.get_fixed_number(h_position=h_position, v_position=v_position)
             if fixed_number == None:
                 continue
 

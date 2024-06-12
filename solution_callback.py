@@ -2,21 +2,19 @@ import numpy as np
 from ortools.sat.python import cp_model
 
 from table import Table
-from consts import Consts
 from variables import Variables
 
 
 class SolutionCallback(cp_model.CpSolverSolutionCallback):
-    def __init__(self, consts: Consts, variables: Variables):
+    def __init__(self, table: Table, variables: Variables):
         super().__init__()
 
-        self._consts = consts
+        self._table = table
         self._variables = variables
-        self._solution_count = 0
         self._result_table: Table | None = None
 
     def _get_assigned_number(self, h_position: int, v_position: int) -> int:
-        for number in self._consts.numbers:
+        for number in self._table.numbers:
             is_assigned_var = self._variables.get_is_assigned_var(h_position=h_position, v_position=v_position, number=number)
             is_assigned = self.value(is_assigned_var)
             if is_assigned:
@@ -24,9 +22,9 @@ class SolutionCallback(cp_model.CpSolverSolutionCallback):
         raise Exception(f"Zero Assigned Number at {h_position} {v_position}")
 
     def _save_result(self) -> None:
-        result_number_array = np.zeros((9, 9), dtype=int)
-        for h_idx, h_position in enumerate(self._consts.h_positions):
-            for v_idx, v_position in enumerate(self._consts.v_positions):
+        result_number_array = np.zeros(self._table.size, dtype=int)
+        for h_idx, h_position in enumerate(self._table.h_positions):
+            for v_idx, v_position in enumerate(self._table.v_positions):
                 number = self._get_assigned_number(h_position=h_position, v_position=v_position)
                 result_number_array[v_idx, h_idx] = number
 
