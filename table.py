@@ -12,6 +12,10 @@ class Table:
         self._number_array = number_array
 
     @property
+    def numbers(self) -> list[int]:
+        return list(range(1, 10))
+
+    @property
     def h_positions(self) -> list[int]:
         return list(range(1, 10))
 
@@ -22,10 +26,6 @@ class Table:
     @property
     def table_size(self) -> tuple[int, int]:
         return len(self.v_positions), len(self.h_positions)
-
-    @property
-    def numbers(self) -> list[int]:
-        return list(range(1, 10))
 
     @property
     def h_grid_positions(self) -> list[int]:
@@ -42,6 +42,10 @@ class Table:
     @property
     def v_positions_in_grid(self) -> list[int]:
         return list(range(1, 4))
+
+    @property
+    def grid_size(self) -> tuple[int, int]:
+        return len(self.v_positions_in_grid), len(self.h_positions_in_grid)
 
     @property
     def number_df(self) -> pd.DataFrame:

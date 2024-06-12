@@ -24,6 +24,7 @@ class Variables:
         return self._is_assigned_var_dict[(h_position, v_position, number)]
 
     def get_is_assigned_var_(self, h_grid_position: int, v_grid_position: int, h_position_in_grid: int, v_position_in_grid: int, number: int) -> cp_model.BoolVarT:
-        h_position = (h_grid_position - 1) * 3 + h_position_in_grid
-        v_position = (v_grid_position - 1) * 3 + v_position_in_grid
+        v_grid_size, h_grid_size = self._table.grid_size
+        h_position = (h_grid_position - 1) * h_grid_size + h_position_in_grid
+        v_position = (v_grid_position - 1) * v_grid_size + v_position_in_grid
         return self.get_is_assigned_var(h_position=h_position, v_position=v_position, number=number)
