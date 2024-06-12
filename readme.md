@@ -1,19 +1,55 @@
-# About
+## 🔢About
 
 Sample program of sudoku solver
 
-# How to use
+## 🐋Docker
 
-- prepare venv
+- docker is required
 
-- install libs
+### Pull image
 
 ```
+docker pull takanarishimbo/sudoku-solver:v1.0.0
+```
+
+### Run image
+
+```
+docker run -it takanarishimbo/sudoku-solver:v1.0.0 /bin/bash
+```
+
+### Run sample program
+
+```
+pyhton sample.py
+```
+
+## 🐍Conda
+
+- conda or miniconda is required
+
+### Create venv
+
+```
+conda create -n sudoku_solver python=3.10
+```
+
+### Activate venv
+
+```
+conda activate sudoku_solver
+```
+
+### Install libs
+
+```
+# Please activate venv before executing it.
 pip install -r requirements.txt
 ```
 
-- run sample program
+### Run sample program
 
 ```
+# Please activate venv before executing it.
 python sample.py
 ```
