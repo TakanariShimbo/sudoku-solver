@@ -9,7 +9,7 @@ Sample program of sudoku solver
 ### Run image
 
 ```
-docker run -it takanarishimbo/sudoku-solver:v1.0.1 /bin/bash
+docker run -it --name sudoku-solver takanarishimbo/sudoku-solver:v1.0.1 /bin/bash
 ```
 
 ### Run sample program
