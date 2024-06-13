@@ -6,16 +6,10 @@ Sample program of sudoku solver
 
 - docker is required
 
-### Pull image
-
-```
-docker pull takanarishimbo/sudoku-solver:v1.0.0
-```
-
 ### Run image
 
 ```
-docker run -it takanarishimbo/sudoku-solver:v1.0.0 /bin/bash
+docker run -it takanarishimbo/sudoku-solver:v1.0.1 /bin/bash
 ```
 
 ### Run sample program
