@@ -7,32 +7,29 @@ from solution_callback import SolutionCallback
 
 
 class Optimizer:
-    def __init__(self, table: Table, seed: int = 123) -> None:
+    @classmethod
+    def run(cls, table: Table, seed: int = 123) -> Table | None:
         model = cp_model.CpModel()
+
+        variables = Variables(model=model, table=table)
+
+        add_constraints(model=model, table=table, variables=variables)
 
         solver = cp_model.CpSolver()
         solver.parameters.random_seed = seed
         solver.parameters.enumerate_all_solutions = False
         solver.parameters.linearization_level = 0
+        solution_callback = SolutionCallback(table=table, variables=variables)
+        status = solver.solve(model=model, solution_callback=solution_callback)
 
-        self._model = model
-        self._solver = solver
-        self._table = table
-
-    def run(self) -> Table | None:
-        variables = Variables(model=self._model, table=self._table)
-
-        add_constraints(model=self._model, table=self._table, variables=variables)
-
-        solution_callback = SolutionCallback(table=self._table, variables=variables)
-        status = self._solver.solve(model=self._model, solution_callback=solution_callback)
         has_solution = status == cp_model.OPTIMAL or status == cp_model.FEASIBLE
-        self._print_statistics()
+        cls._print_statistics(solver=solver)
 
         if not has_solution:
             return None
         return solution_callback.result_table
 
-    def _print_statistics(self) -> None:
+    @staticmethod
+    def _print_statistics(solver: cp_model.CpSolver) -> None:
         print("\n-------- WallTime --------")
-        print(f"{self._solver.wall_time:1f} s")
+        print(f"{solver.wall_time:1f} s")

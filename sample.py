@@ -19,8 +19,7 @@ init_number_array = np.array(
     dtype=int,
 )
 init_table = Table(number_array=init_number_array)
-optimizer = Optimizer(table=init_table, seed=123)
-result_table = optimizer.run()
+result_table = Optimizer.run(table=init_table, seed=123)
 
 
 print("\n-------- Probrem --------")
