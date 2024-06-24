@@ -65,6 +65,15 @@ class Table:
             dtype=int,
         )
 
+    @property
+    def number_dict(self) -> dict[int, dict[int, int]]:
+        return pd.DataFrame(
+            data=self._number_array,
+            index=self.v_positions(),
+            columns=self.h_positions(),
+            dtype=int,
+        ).to_dict()  # type: ignore
+
     def get_fixed_number(self, h_position: int, v_position: int) -> int | None:
         val = self.number_df.loc[v_position, h_position]
         if val == 0:
