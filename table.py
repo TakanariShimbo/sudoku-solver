@@ -71,3 +71,10 @@ class Table:
             return None
         else:
             return int(val)
+
+    def convert_some_cells_to_zero(self, n_cells_to_zero: int, seed: int) -> None:
+        np.random.seed(seed)
+        idxes = np.arange(self._number_array.size)
+        np.random.shuffle(idxes)
+        target_idxes = idxes[:n_cells_to_zero]
+        np.put(self._number_array, target_idxes, 0)
