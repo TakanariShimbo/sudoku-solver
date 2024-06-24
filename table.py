@@ -11,6 +11,15 @@ class Table:
 
         self._number_array = number_array
 
+    @classmethod
+    def from_number_df(cls, number_df: pd.DataFrame) -> "Table":
+        return cls(number_array=number_df.values)
+
+    @classmethod
+    def from_number_dict(cls, number_dict: dict[int, dict[int, int]]) -> "Table":
+        number_df = pd.DataFrame(data=number_dict)
+        return cls.from_number_df(number_df=number_df)
+
     @property
     def numbers(self) -> list[int]:
         return list(range(1, 10))
