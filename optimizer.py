@@ -11,7 +11,7 @@ class Optimizer:
     def run(cls, table: Table, seed: int = 123) -> Table | None:
         model = cp_model.CpModel()
 
-        variables = Variables(model=model, table=table)
+        variables = Variables(model=model)
 
         add_constraints(model=model, table=table, variables=variables)
 

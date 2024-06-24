@@ -4,10 +4,10 @@ import pandas as pd
 
 class Table:
     def __init__(self, number_array: np.ndarray) -> None:
-        assert number_array.shape == self.table_size
+        assert number_array.shape == self.table_size()
         assert np.issubdtype(number_array.dtype, np.integer)
         assert number_array.min() >= 0
-        assert number_array.max() <= max(self.numbers)
+        assert number_array.max() <= max(self.numbers())
 
         self._number_array = number_array
 
@@ -20,48 +20,48 @@ class Table:
         number_df = pd.DataFrame(data=number_dict)
         return cls.from_number_df(number_df=number_df)
 
-    @property
-    def numbers(self) -> list[int]:
+    @staticmethod
+    def numbers() -> list[int]:
         return list(range(1, 10))
 
-    @property
-    def h_positions(self) -> list[int]:
+    @staticmethod
+    def h_positions() -> list[int]:
         return list(range(1, 10))
 
-    @property
-    def v_positions(self) -> list[int]:
+    @staticmethod
+    def v_positions() -> list[int]:
         return list(range(1, 10))
 
-    @property
-    def table_size(self) -> tuple[int, int]:
-        return len(self.v_positions), len(self.h_positions)
+    @classmethod
+    def table_size(cls) -> tuple[int, int]:
+        return len(cls.v_positions()), len(cls.h_positions())
 
-    @property
-    def h_grid_positions(self) -> list[int]:
+    @staticmethod
+    def h_grid_positions() -> list[int]:
         return list(range(1, 4))
 
-    @property
-    def v_grid_positions(self) -> list[int]:
+    @staticmethod
+    def v_grid_positions() -> list[int]:
         return list(range(1, 4))
 
-    @property
-    def h_positions_in_grid(self) -> list[int]:
+    @staticmethod
+    def h_positions_in_grid() -> list[int]:
         return list(range(1, 4))
 
-    @property
-    def v_positions_in_grid(self) -> list[int]:
+    @staticmethod
+    def v_positions_in_grid() -> list[int]:
         return list(range(1, 4))
 
-    @property
-    def grid_size(self) -> tuple[int, int]:
-        return len(self.v_positions_in_grid), len(self.h_positions_in_grid)
+    @classmethod
+    def grid_size(cls) -> tuple[int, int]:
+        return len(cls.v_positions_in_grid()), len(cls.h_positions_in_grid())
 
     @property
     def number_df(self) -> pd.DataFrame:
         return pd.DataFrame(
             data=self._number_array,
-            index=self.v_positions,
-            columns=self.h_positions,
+            index=self.v_positions(),
+            columns=self.h_positions(),
             dtype=int,
         )
 
